@@ -1,0 +1,39 @@
+import os
+
+def convert_to_exe(script_name, output_dir="dist", icon_path=None, console=True):
+    """
+    Function to convert Python script to a standalone executable.
+
+    Parameters:
+        script_name (str): Name of the Python script to convert.
+        output_dir (str): Directory to save the .exe file (default: 'dist').
+        icon_path (str): Path to the icon file (.ico) for the application (optional).
+        console (bool): Whether to show the console window or not.
+    """
+    try:
+        # Construct the PyInstaller command
+        command = f"pyinstaller --onefile"
+        
+        if not console:
+            command += " --noconsole"
+        
+        if icon_path:
+            command += f" --icon={icon_path}"
+        
+        command += f" --distpath {output_dir} {script_name}"
+
+        # Execute the command
+        os.system(command)
+        print(f"✅ Conversion completed! Check the '{output_dir}' folder for your executable.")
+    except Exception as e:
+        print(f"❌ An error occurred: {e}")
+
+# Example usage
+if __name__ == "__main__":
+    script_file = "my_script.py"  # Replace with your script file
+    output_folder = "dist"
+    app_icon = "app_icon.ico"  # Optional: replace with the path to your icon
+    show_console = False       # Set to True if you want a console window
+
+    # Call the conversion function
+    convert_to_exe(script_file, output_dir=output_folder, icon_path=app_icon, console=show_console)
